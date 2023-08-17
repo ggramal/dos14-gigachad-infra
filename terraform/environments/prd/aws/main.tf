@@ -5,12 +5,25 @@ terraform {
       version = "5.11.0"
     }
   }
+  backend "s3" {
+    bucket = "dos14-tf-state"
+    key = "gigachad/prd/aws/state.tfstate"
+    dynamodb_table = "tf_state_gigachad"
+    region = "eu-central-1"
+  }
 }
 
 provider "aws" {
-  region = "eu-central-1"
+  region = "eu-west-2"
 }
 
+locals {
+#  instances = {
+#    "instance1" = {
+#      name = "tf-example-1"
+#    }
+#  }
+}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -27,3 +40,16 @@ data "aws_ami" "ubuntu" {
 
   owners = ["099720109477"] # Canonical
 }
+
+resource "aws_instance" "authz" {
+  for_each               = local.instances
+  ami           = data.aws_ami.ubuntu.image_id
+  instance_type = "t3.micro"
+  key_name = var.ssh_key_name
+  vpc_security_group_ids = ["sg-041f0f77864869a9b"]
+  tags = {
+    Name = each.value.name
+  }
+}
+
+
