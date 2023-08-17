@@ -45,11 +45,19 @@ resource "aws_instance" "authz" {
   for_each               = local.instances
   ami           = data.aws_ami.ubuntu.image_id
   instance_type = "t3.micro"
-  key_name = var.ssh_key_name
+  key_name = "gae"
   vpc_security_group_ids = ["sg-041f0f77864869a9b"]
   tags = {
     Name = each.value.name
   }
 }
 
-
+module "vpc" {
+  source = "../../../modules/aws/vpc/"
+  for_each = local.vpcs
+  name = each.value.name
+  cidr = each.value.cidr
+  internet_gws = each.value.internet_gws
+  nat_gws = each.value.nat_gws
+  subnets = each.value.subnets
+}
