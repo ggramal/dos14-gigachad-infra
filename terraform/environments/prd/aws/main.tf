@@ -51,13 +51,3 @@ resource "aws_instance" "authz" {
     Name = each.value.name
   }
 }
-
-module "vpc" {
-  source = "../../../modules/aws/vpc/"
-  for_each = local.vpcs
-  name = each.value.name
-  cidr = each.value.cidr
-  internet_gws = each.value.internet_gws
-  nat_gws = each.value.nat_gws
-  subnets = each.value.subnets
-}
