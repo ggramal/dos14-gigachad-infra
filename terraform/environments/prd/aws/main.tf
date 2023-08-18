@@ -18,11 +18,11 @@ provider "aws" {
 }
 
 locals {
-#  instances = {
-#    "instance1" = {
-#      name = "tf-example-1"
-#    }
-#  }
+  instances = {
+    "instance1" = {
+      name = "tf-example-1"
+    }
+  }
 }
 
 data "aws_ami" "ubuntu" {
@@ -45,11 +45,22 @@ resource "aws_instance" "authz" {
   for_each               = local.instances
   ami           = data.aws_ami.ubuntu.image_id
   instance_type = "t3.micro"
-  key_name = var.ssh_key_name
-  vpc_security_group_ids = ["sg-041f0f77864869a9b"]
+  key_name = "gae"
+  subnet_id = module.vpcs["gigachad-tf"].subnets["public-subnet1"].id
+  vpc_security_group_ids = ["sg-0905d0ff7aa4d44fd"]
   tags = {
     Name = each.value.name
   }
 }
 
+
+module "vpcs" {
+  source =  "../../../modules/aws/vpc/"
+  for_each = local.vpcs
+  name = each.value.name
+  cidr = each.value.cidr
+  internet_gws = each.value.internet_gws
+  nat_gws = each.value.nat_gws
+  subnets = each.value.subnets
+}
 
