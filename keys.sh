@@ -1,14 +1,15 @@
 #!/bin/bash
-
-# Execute the aws sts assume-role command and store the output in a variable
-output=$(aws sts assume-role --role-arn arn:aws:iam::546240550610:role/Admins --role-session-name tf --serial-number <your_mfa_id> --token-code <your_token_code> --profile <your_profile>)
-
-# Parse the output to extract the values of AccessKeyId, SecretAccessKey, SessionToken
-access_key=$(echo "$output" | jq -r '.Credentials.AccessKeyId')
-secret_key=$(echo "$output" | jq -r '.Credentials.SecretAccessKey')
-session_token=$(echo "$output" | jq -r '.Credentials.SessionToken')
-
-# Export the values as environment variables
-export AWS_ACCESS_KEY_ID="$access_key"
-export AWS_SECRET_ACCESS_KEY="$secret_key"
-export AWS_SESSION_TOKEN="$session_token"
+read -p 'Enter your MFA token: ' token
+read -p 'Enter profile name: ' profile
+read -p 'Enter mfa name: ' mfa
+export AWS_PROFILE=$profile
+accountID=$( aws sts get-caller-identity  | jq -r '.Account')
+json=$( aws sts assume-role --role-arn arn:aws:iam::$accountID:role/Admins \
+--role-session-name tf \
+--serial-number arn:aws:iam::$accountID:mfa/$mfa \
+--token-code $token \
+--profile $profile)
+eval $(echo  $json | jq -r '.Credentials | "AccessKeyId=\(.AccessKeyId)","SecretAccessKey=\(.SecretAccessKey)","SessionToken=\(.SessionToken)"')
+export AWS_ACCESS_KEY_ID=$AccessKeyId
+export AWS_SECRET_ACCESS_KEY=$SecretAccessKey
+export AWS_SESSION_TOKEN=$SessionToken
