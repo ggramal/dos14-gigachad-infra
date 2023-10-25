@@ -2,7 +2,7 @@ locals {
   vpcs = {
     gigachad-tf = {
       name = "gigachad-tf"
-      cidr = "10.0.0.0/16"  
+      cidr = "10.0.0.0/16"
       internet_gws = {
         "igw-1" = {
           name = "igw-1"
@@ -35,6 +35,18 @@ locals {
             {
               cidr = "0.0.0.0/0"
               nat_gw = "nat-1"
+            }
+          ]
+        }
+      }
+      rds_subnets = {
+        rds_subnet_1 = {
+          name              = "gigachad_rds_1-tf"
+          cidr              = "10.0.3.0/24"
+          availability_zone = "eu-west-2a"
+          routes = [
+            {
+              cidr = "0.0.0.0/0"
             }
           ]
         }
