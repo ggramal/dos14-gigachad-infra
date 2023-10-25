@@ -6,7 +6,6 @@ resource "aws_vpc" "main" {
   }
 }
 
-
 resource "aws_internet_gateway" "gws" {
   for_each = var.internet_gws
   vpc_id = aws_vpc.main.id
@@ -15,7 +14,6 @@ resource "aws_internet_gateway" "gws" {
     Name = "${var.name}-${each.value.name}"
   }
 }
-
 
 resource "aws_subnet" "main" {
   for_each = var.subnets
