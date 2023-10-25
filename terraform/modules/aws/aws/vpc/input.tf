@@ -25,7 +25,7 @@ variable "nat_gws" {
     object(
       {
         name = string
-	subnet = string
+        subnet = string
       }
     )
   )
@@ -38,22 +38,32 @@ variable "subnets" {
     object(
       {
         name = string
-	cidr = string
-	public_ip_on_launch = optional(bool,false)
-	availability_zone = string
-	routes = list(
-	  object(
-	    {
-	      cidr = string
-	      internet_gw = optional(string)
-	      nat_gw = optional(string)
-	    }
-	  )
-	)
+        cidr = string
+        public_ip_on_launch = optional(bool,false)
+        availability_zone = string
+        routes = list(
+          object(
+            {
+              cidr = string
+              internet_gw = optional(string)
+              nat_gw = optional(string)
+            }
+          )
+        )
       }
     )
   )
 }
 
-
-
+variable "rds_subnets" {
+  description = "rds subnets"
+  type = map(
+    object(
+      {
+        name              = string
+        cidr              = string
+        availability_zone = string
+      }
+    )
+  )
+}
