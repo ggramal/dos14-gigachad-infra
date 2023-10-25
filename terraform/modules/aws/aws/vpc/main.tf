@@ -72,8 +72,7 @@ resource "aws_route_table" "routes" {
       nat_gateway_id = aws_nat_gateway.nats[route.value.nat_gw].id
     }
   }
-
-  route {
+route {
     cidr_block = var.cidr
     gateway_id = "local"
   }
