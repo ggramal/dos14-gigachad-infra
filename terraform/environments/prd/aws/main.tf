@@ -20,6 +20,7 @@ provider "aws" {
 
 module "vpcs" {
   source =  "../../../modules/aws/aws/vpc/"
+  for_each = local.vpcs
   name = local.vpcs.gigachad-tf.name
   cidr = local.vpcs.gigachad-tf.cidr
   internet_gws = local.vpcs.gigachad-tf.internet_gws
