@@ -19,7 +19,7 @@ provider "aws" {
 
 
 module "vpcs" {
-  source =  "../../../modules/aws/aws/vpc/"
+  source =  "../../../modules/aws/vpc/"
   for_each = local.vpcs
   name = local.vpcs.gigachad-tf.name
   cidr = local.vpcs.gigachad-tf.cidr
@@ -32,7 +32,7 @@ module "vpcs" {
 
 
 module "gigachad_rds" {
-  source = "../../../modules/aws/aws/rds/"
+  source = "../../../modules/aws/rds/"
   vpc_id = module.vpcs.vpc_id
   db_subnet_name = local.gigachad_rds.db_subnet_name
   publicly_accessible = local.gigachad_rds.publicly_accessible
