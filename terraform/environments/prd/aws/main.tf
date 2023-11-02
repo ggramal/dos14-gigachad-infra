@@ -20,7 +20,6 @@ provider "aws" {
 
 module "vpcs" {
   source =  "../../../modules/aws/vpc/"
-  for_each = local.vpcs
   name = each.value.name
   cidr = each.value.cidr
   internet_gws = each.value.internet_gws
