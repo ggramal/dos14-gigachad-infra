@@ -1,10 +1,12 @@
 locals {
+rdss = {
+gigachad-tf = {
   gigachad_rds = {
     engine              = "postgres"
     storage             = "5"
     db_subnet_name      = "subnet-db"
     publicly_accessible = false
-    name                = "gigachad"
+    name                = "gigachad-tf"
     engine_version      = "14.3"
     instance_class      = "db.t3.micro"
     username            = "giga"
@@ -28,6 +30,8 @@ locals {
     }
   }
 }
+}
+}
 
 # generate random RDS password
 resource "random_password" "password" {
@@ -35,4 +39,3 @@ resource "random_password" "password" {
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
-
