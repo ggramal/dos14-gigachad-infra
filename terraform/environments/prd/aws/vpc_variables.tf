@@ -1,3 +1,4 @@
+
 locals {
   vpcs = {
     gigachad-tf = {
@@ -38,9 +39,8 @@ locals {
             }
           ]
         }
-      }
-      rds_subnets = {
-        rds_subnet_1 = {
+
+        rds_subnets = {
           name              = "gigachad_rds_1-tf"
           cidr              = "10.0.3.0/24"
           availability_zone = "eu-west-2a"
@@ -50,6 +50,7 @@ locals {
             }
           ]
         }
+
       }
     }
   }
