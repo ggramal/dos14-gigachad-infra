@@ -20,31 +20,32 @@ provider "aws" {
 
 module "vpcs" {
   source =  "../../../modules/aws/vpc/"
-  name = local.vpcs.gigachad-tf.name
-  cidr = local.vpcs.gigachad-tf.cidr
-  internet_gws = local.vpcs.gigachad-tf.internet_gws
-  nat_gws = local.vpcs.gigachad-tf.nat_gws
-  subnets = local.vpcs.gigachad-tf.subnets
-  rds_subnets = local.vpcs.gigachad-tf.rds_subnets
+  for_each = local.vpcs
+  name = each.value.name
+  cidr = each.value.cidr
+  internet_gws = each.value.internet_gws
+  nat_gws = each.value.nat_gws
+  subnets = each.value.subnets
 }
 
 
 
 module "gigachad_rds" {
   source = "../../../modules/aws/rds/"
-  vpc_id = module.vpcs.vpc_id
-  db_subnet_name = local.gigachad_rds.db_subnet_name
-  publicly_accessible = local.gigachad_rds.publicly_accessible
-  engine_version = local.gigachad_rds.engine_version
-  name = local.gigachad_rds.name
-  engine = local.gigachad_rds.engine
-  storage = local.gigachad_rds.storage
-  instance_class = local.gigachad_rds.instance_class
-  username = local.gigachad_rds.username
-  password = local.gigachad_rds.password
-  final_snap = local.gigachad_rds.final_snap
-  sg_name = local.gigachad_rds.sg_name
-  rds_subnet_ids = module.vpcs.rds_subnet_ids
-  rds_sg = local.sg_rds
-  identifier = local.gigachad_rds.identifier
+  for_each = local.rdss
+  vpc_id = module.vpcs[each.value.gigachad_rds.name].vpc_id
+  db_subnet_name = each.value.gigachad_rds.db_subnet_name
+  publicly_accessible = each.value.gigachad_rds.publicly_accessible
+  engine_version = each.value.gigachad_rds.engine_version
+  name = each.value.gigachad_rds.name
+  engine = each.value.gigachad_rds.engine
+  storage = each.value.gigachad_rds.storage
+  instance_class = each.value.gigachad_rds.instance_class
+  username = each.value.gigachad_rds.username
+  password = each.value.gigachad_rds.password
+  final_snap = each.value.gigachad_rds.final_snap
+  sg_name = each.value.gigachad_rds.sg_name
+  rds_subnet_ids = module.vpcs[each.key].rds_subnet_ids
+  rds_sg = each.value.sg_rds
+  identifier = each.value.gigachad_rds.identifier
 }
