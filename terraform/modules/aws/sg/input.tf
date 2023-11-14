@@ -15,7 +15,7 @@ variable "description" {
 
 variable "sg_ingress" {
   description = "Ingress variables for SG"
-  type = map(object({
+  type = list(object({
     from_port   = number
     to_port     = number
     protocol    = string
@@ -26,7 +26,7 @@ variable "sg_ingress" {
 
 variable "sg_egress" {
   description = "Egress variables for SG"
-  type = map(object({
+  type = list(object({
     from_port   = number
     to_port     = number
     protocol    = string

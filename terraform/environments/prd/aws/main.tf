@@ -19,7 +19,7 @@ provider "aws" {
 
 module "sg" {
   source = "../../../modules/aws/sg/"
-  vpc_id = module.vpcs.vpc_id
+  vpc_id = module.vpcs["gigachad-tf"].vpc_id
   for_each = local.sgroups
   name = each.value.name
   description = each.value.description
