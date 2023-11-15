@@ -33,11 +33,11 @@ module "vpcs" {
 module "gigachad_rds" {
   source = "../../../modules/aws/rds/"
   for_each = local.rdss
-  vpc_id = module.vpcs[each.value.gigachad_rds.name].vpc_id
+  vpc_id = module.vpcs[each.value.gigachad_rds.vpc_name].vpc_id
   db_subnet_name = each.value.gigachad_rds.db_subnet_name
   publicly_accessible = each.value.gigachad_rds.publicly_accessible
   engine_version = each.value.gigachad_rds.engine_version
-  name = each.value.gigachad_rds.name
+  name = each.value.gigachad_rds.vpc_name
   engine = each.value.gigachad_rds.engine
   storage = each.value.gigachad_rds.storage
   instance_class = each.value.gigachad_rds.instance_class
