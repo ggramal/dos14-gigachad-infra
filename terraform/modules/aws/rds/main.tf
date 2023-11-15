@@ -44,7 +44,6 @@ resource "aws_db_instance" "gigachad" {
   engine_version         = var.engine_version
   instance_class         = var.instance_class
   username               = var.username
-  password               = var.password
   skip_final_snapshot    = var.final_snap
   db_subnet_group_name   = aws_db_subnet_group.database_subnet_group.name
   identifier             = var.identifier
