@@ -41,9 +41,13 @@ variable "instance_class" {
 
 variable "password" {
   description = "RDS root user password"
-  type        = string
-  sensitive   = true
-}
+  type        = object(
+    {
+      length           = number
+      special          = bool
+      override_special = string
+    }
+  )
 
 variable "username" {
   description = "DB username"
