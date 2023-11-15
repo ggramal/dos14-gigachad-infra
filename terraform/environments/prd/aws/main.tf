@@ -17,6 +17,15 @@ provider "aws" {
   region = "eu-west-2"
 }
 
+module "sg" {
+  source = "../../../modules/aws/sg/"
+  vpc_id = module.vpcs["gigachad-tf"].vpc_id
+  for_each = local.sgroups
+  name = each.value.name
+  description = each.value.description
+  sg_egress = each.value.egress
+  sg_ingress = each.value.ingresses
+}
 
 module "vpcs" {
   source =  "../../../modules/aws/vpc/"
