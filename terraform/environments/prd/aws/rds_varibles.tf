@@ -10,6 +10,11 @@ gigachad-tf = {
     engine_version      = "14.3"
     instance_class      = "db.t3.micro"
     username            = "giga"
+    password = {
+      length           = 16
+      special          = true
+      override_special = "!#$%&*()-_=+[]{}<>:?"
+    }
     identifier          = "gigachad-rds-tf"
     final_snap          = "true"
     sg_name             = "sg-rds-db"
