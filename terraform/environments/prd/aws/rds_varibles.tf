@@ -1,25 +1,24 @@
 locals {
 rdss = {
 gigachad-tf = {
-  gigachad_rds = {
-    engine              = "postgres"
-    storage             = "5"
-    db_subnet_name      = "subnet-db"
-    publicly_accessible = false
-    vpc_name            = "gigachad-tf"
-    engine_version      = "14.3"
-    instance_class      = "db.t3.micro"
-    username            = "giga"
-    password = {
-      length           = 16
-      special          = true
-      override_special = "!#$%&*()-_=+[]{}<>:?"
-    }
-    identifier          = "gigachad-rds-tf"
-    final_snap          = "true"
-    sg_name             = "sg-rds-db"
+  engine              = "postgres"
+  storage             = "5"
+  db_subnet_name      = "subnet-db"
+  publicly_accessible = false
+  vpc_name            = "gigachad-tf"
+  engine_version      = "14.3"
+  instance_class      = "db.t3.micro"
+  username            = "giga"
+  password = {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
   }
+  identifier          = "gigachad-rds-tf"
+  final_snap          = "true"
+  sg_name             = "sg-rds-db"
   sg_rds = {
+
     ingress = {
       from_port   = 5432
       to_port     = 5432
