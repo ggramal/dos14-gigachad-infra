@@ -28,24 +28,22 @@ module "vpcs" {
   subnets = each.value.subnets
 }
 
-
-
 module "gigachad_rds" {
   source = "../../../modules/aws/rds/"
   for_each = local.rdss
-  vpc_id = module.vpcs[each.value.gigachad_rds.vpc_name].vpc_id
-  db_subnet_name = each.value.gigachad_rds.db_subnet_name
-  publicly_accessible = each.value.gigachad_rds.publicly_accessible
-  engine_version = each.value.gigachad_rds.engine_version
-  name = each.value.gigachad_rds.vpc_name
-  engine = each.value.gigachad_rds.engine
-  storage = each.value.gigachad_rds.storage
-  instance_class = each.value.gigachad_rds.instance_class
-  username = each.value.gigachad_rds.username
-  password = each.value.gigachad_rds.password
-  final_snap = each.value.gigachad_rds.final_snap
-  sg_name = each.value.gigachad_rds.sg_name
+  vpc_id = module.vpcs[each.value.vpc_name].vpc_id
+  db_subnet_name = each.value.db_subnet_name
+  publicly_accessible = each.value.publicly_accessible
+  engine_version = each.value.engine_version
+  name = each.value.vpc_name
+  engine = each.value.engine
+  storage = each.value.storage
+  instance_class = each.value.instance_class
+  username = each.value.username
+  password = each.value.password
+  final_snap = each.value.final_snap
+  sg_name = each.value.sg_name
   rds_subnet_ids = module.vpcs[each.key].rds_subnet_ids
   rds_sg = each.value.sg_rds
-  identifier = each.value.gigachad_rds.identifier
+  identifier = each.value.identifier
 }
