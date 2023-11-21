@@ -48,6 +48,7 @@ variable "password" {
       override_special = string
     }
   )
+}
 
 variable "username" {
   description = "DB username"
