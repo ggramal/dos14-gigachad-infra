@@ -36,6 +36,7 @@ module "gigachad_rds" {
   publicly_accessible = each.value.publicly_accessible
   engine_version = each.value.engine_version
   name = each.value.vpc_name
+  db_password = each.value.db_password
   engine = each.value.engine
   storage = each.value.storage
   instance_class = each.value.instance_class
