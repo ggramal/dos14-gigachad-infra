@@ -6,6 +6,7 @@ gigachad-tf = {
   db_subnet_name      = "subnet-db"
   publicly_accessible = false
   vpc_name            = "gigachad-tf"
+  db_password         = random_password.db_password.result
   engine_version      = "14.3"
   instance_class      = "db.t3.micro"
   username            = "giga"
@@ -35,3 +36,11 @@ gigachad-tf = {
 }
 }
 }
+
+resource "random_password" "db_password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+
