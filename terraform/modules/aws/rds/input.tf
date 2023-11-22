@@ -24,6 +24,10 @@ variable "name" {
   type        = string
 }
 
+variable "db_password" {
+  description = "db_password"
+  type        = string
+}
 variable "storage" {
   description = "allocated_storage"
   type        = number
